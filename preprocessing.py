@@ -140,7 +140,10 @@ for file in files2:
     ls2[-1] = data
     print(data)
 
-ls = ls1 + ls2
-data = pd.concat(ls, ignore_index=True)
+data1 = pd.concat(ls1, ignore_index=True)
+data1.label = data1.label / data1.label.max()
+data2 = pd.concat(ls2, ignore_index=True)
+data2.label = data2.label / data2.label.max()
+data = pd.concat([data1, data2], ignore_index=True)
 print(data)
 data.to_csv(output_path, index=None)
