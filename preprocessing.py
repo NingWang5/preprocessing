@@ -4,7 +4,7 @@ import os
 
 
 ################## Configuration ####################
-percent = 60
+percent = 0.1
 times = 10
 folder_path = '/root/wangning/data'
 label_path = '/root/wangning/preprocessing/label.csv'
@@ -45,17 +45,14 @@ for file in files1:
     data = data.reset_index(drop=True)
 
     num = 0
-    for idx, row in data.iterrows():
-        if abs(row['x']) < x_mean:
+    drop_list = list(data[data['x'] <= x_mean].index)
+    for i in range(1, len(drop_list)):
+        if drop_list[i] == drop_list[i-1] + 1:
             num += 1
         else:
+            if num > times:
+                data = data.drop(index=list(range(drop_list[i-1]-num, drop_list[i-1])))
             num = 0
-        if num > times:
-            num = idx - times
-            break
-    length = len(data)
-    num = length if num == 0 else num
-    data = data.drop(index=list(range(num, length)))
     data = data.reset_index(drop=True)
 
     t = -1
@@ -106,17 +103,14 @@ for file in files2:
     data = data.reset_index(drop=True)
 
     num = 0
-    for idx, row in data.iterrows():
-        if abs(row['x']) < x_mean:
+    drop_list = list(data[data['x'] <= x_mean].index)
+    for i in range(1, len(drop_list)):
+        if drop_list[i] == drop_list[i-1] + 1:
             num += 1
         else:
+            if num > times:
+                data = data.drop(index=list(range(drop_list[i-1]-num, drop_list[i-1])))
             num = 0
-        if num > times:
-            num = idx - times
-            break
-    length = len(data)
-    num = length if num == 0 else num
-    data = data.drop(index=list(range(num, length)))
     data = data.reset_index(drop=True)
 
     t = -1
