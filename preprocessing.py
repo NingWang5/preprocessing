@@ -50,7 +50,7 @@ for file in files1:
         if drop_list[i] == drop_list[i-1] + 1:
             num += 1
         else:
-            if num > times:
+            if num >= times:
                 data = data.drop(index=list(range(drop_list[i-1]-num, drop_list[i-1])))
             num = 0
     data = data.reset_index(drop=True)
@@ -108,7 +108,7 @@ for file in files2:
         if drop_list[i] == drop_list[i-1] + 1:
             num += 1
         else:
-            if num > times:
+            if num >= times:
                 data = data.drop(index=list(range(drop_list[i-1]-num, drop_list[i-1])))
             num = 0
     data = data.reset_index(drop=True)
